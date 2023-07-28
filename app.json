@@ -1,13 +1,13 @@
 {
   "expo": {
-    "name": "login",
-    "slug": "login",
+    "name": "Zeplay",
+    "slug": "Zeplay",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
-    "userInterfaceStyle": "light",
+    "icon": "./assets/zetify.png",
+    "userInterfaceStyle": "automatic",
     "splash": {
-      "image": "./assets/splash.png",
+      "image": "./assets/zetify.png",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },

@@ -1,20 +1,80 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import * as React from 'react';
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import WelcomePage from './src/WelcomePage';
+import { StatusBar } from 'react-native';
+import { KeyboardAvoidingView } from 'react-native';
+import EnterOTP from './src/auth/LoginWithEmail';
+import HomeScreen from './src/homeScreen/HomeScreen';
+import SignUp from './src/auth/signUp';
+import LoginWithEmail from './src/auth/LoginWithEmail';
+import { AsyncStorage } from 'react-native';
+import { useState,useEffect } from 'react';
+import { getAuth, onAuthStateChanged } from "firebase/auth";
+import { app } from './firebase/InitFirebase';
+import Signin from './src/auth/Signin';
+import TabNavigation from './TabNavigation';
+import ProfileScreen from './src/profile/ProfileScreen';
+import ModalMusic from './src/components/ModalMusic';
+import CurrentMusic from './src/components/CurrentMusic';
+import { Provider } from 'react-redux';
+import { store } from './redux/redux';
+import Albums from './src/components/Albums';
+import { PlayerContext } from './src/PlayerContext';
+
 
 export default function App() {
+  const [changeState, setChangeState]=useState(false)
+
+
+const auth = getAuth(app);
+
+
+
+  const Stack = createNativeStackNavigator();
+  const isRedStatusBar = true;
+
+  
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <PlayerContext>
+
+    <Provider store={store}>
+    <KeyboardAvoidingView style={{ flex: 4 }}
+    behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
+    <NavigationContainer>
+         {isRedStatusBar ? (
+        <StatusBar  barStyle="dark-content" />
+      ) : (
+        <StatusBar barStyle="light-content" />
+      )}
+      <Stack.Navigator initialRouteName=' ' >
+      <Stack.Screen name=" " component={TabNavigation} options={{
+          headerShown :false,
+        }} />
+      <Stack.Screen name="welcome" component={WelcomePage} options={{
+          headerShown :false,
+        }} />
+        <Stack.Screen name="signup" component={SignUp} options={{
+          headerShown :false,
+        }} />
+        <Stack.Screen name="signin" component={Signin} options={{
+          headerShown :false,
+        }} />
+        <Stack.Screen name="profile" component={ProfileScreen} options={{
+          headerShown :false,
+        }} />
+        <Stack.Screen name="modal" component={ModalMusic} options={{
+          headerShown :false,
+        }} />
+        <Stack.Screen name="currentmusic" component={CurrentMusic} options={{
+          headerShown :false,
+        }} />
+
+        
+      </Stack.Navigator>
+    </NavigationContainer>
+    </KeyboardAvoidingView>
+    </Provider>
+    </PlayerContext>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
